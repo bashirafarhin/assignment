@@ -10,20 +10,25 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, account, profile }) {
-      if (account && profile) {
+      if (account && profile && account.provider === "google") {
         token.name = profile.name;
         token.email = profile.email;
-        token.picture = profile.picture;
+        if ("picture" in profile && typeof profile.picture === "string") {
+          token.picture = profile.picture;
+        }
       }
       return token;
     },
     async session({ session, token }) {
-      if (token) {
-        session.user.name = token.name;
-        session.user.email = token.email;
-        session.user.image = token.picture;
-      }
-      return session;
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          name: token.name,
+          email: token.email,
+          image: token.picture,
+        },
+      };
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
