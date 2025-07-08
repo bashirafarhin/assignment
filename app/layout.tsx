@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
+import NextThemeProvider from "../Providers/NextThemeProvider";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import Loader from "@/components/ui/Loader";
+import { Suspense } from "react";
+import ToastProvider from "@/Providers/ToastProvider";
+import StoreProvider from "@/Providers/StoreProvider";
+import AuthProvider from "@/Providers/AuthProvider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const poppins = Poppins({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "600", "700"], // Include the font weights you need
+  variable: "--font-poppins",
 });
 
 export const metadata: Metadata = {
@@ -23,11 +27,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${poppins.className} antialiased flex flex-col justify-between min-h-screen items-center`}
       >
-        {children}
+        <NextThemeProvider>
+          <AuthProvider>
+          <StoreProvider>
+          <Header />
+          <Suspense fallback={<Loader />}>{children}</Suspense>
+          <ToastProvider/>
+          <Footer />
+          </StoreProvider>
+          </AuthProvider>
+        </NextThemeProvider>
       </body>
     </html>
   );
