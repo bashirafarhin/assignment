@@ -1,5 +1,5 @@
 import React from "react";
-// import TrendingNews from "./TrendingNews";
+import TrendingNews from "./TrendingNews";
 import TrendingMovies from "./TrendingMovies";
 
 const Main = () => {
@@ -9,7 +9,7 @@ const Main = () => {
       <p className="text-base sm:text-lg font-normal mt-4">
         Click on the above buttons to reach your destination
       </p>
-      {/* <TrendingNews /> */}
+      <TrendingNews />
       <TrendingMovies />
     </div>
   );
