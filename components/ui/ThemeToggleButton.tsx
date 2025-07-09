@@ -34,7 +34,7 @@ const ThemeToggleButton = () => {
   const isDark = resolvedTheme === "dark";
 
   return (
-    <Button onClick={toggleTheme}>
+    <Button onClick={toggleTheme} className="px-2 py-2">
       {isDark ? <Sun size={18} /> : <Moon size={18} />}
     </Button>
   );

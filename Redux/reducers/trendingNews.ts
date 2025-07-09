@@ -9,10 +9,8 @@ export const fetchTrendingNews = createAsyncThunk<
 >("trending/fetchTrendingNews", async (_, thunkAPI) => {
   try {
     const response = await axios.get("/api/news/trending-news");
-    console.log(response.data.length);
     return response.data;
   } catch (error: unknown) {
-    console.log(error);
     if (axios.isAxiosError(error)) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.error || "custom error"

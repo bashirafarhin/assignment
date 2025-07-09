@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 const FALLBACK_IMAGE = "/fallback.jpeg";
-console.log(FALLBACK_IMAGE);
 
 interface SmartImageProps {
   src: string;

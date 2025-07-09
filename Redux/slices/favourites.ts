@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { FavouritesState, MusicItem } from "@/types/favourites";
+import type { FavouritesState, MoviesItem } from "@/types/favourites";
 import type { NewsArticle } from "@/types/news";
 import { getFavouritesFromLocalStorage, updateLocalStorage } from "../reducers/favourites";
 
 const initialState: FavouritesState = {
   news: [],
-  music: [],
+  movies: [],
   error: null,
 };
 
@@ -19,7 +19,7 @@ const favouritesSlice = createSlice({
       try {
         const stored = getFavouritesFromLocalStorage();
         state.news = stored.news;
-        state.music = stored.music;
+        state.movies = stored.movies;
       } catch {
         state.error = "Failed to load favourites";
       }
@@ -30,8 +30,8 @@ const favouritesSlice = createSlice({
         type: "news";
         item: NewsArticle;
       } | {
-        type: "music";
-        item: MusicItem;
+        type: "movies";
+        item: MoviesItem;
       }>
     ) {
       const { type, item } = action.payload;
@@ -40,22 +40,22 @@ const favouritesSlice = createSlice({
         const exists = state.news.some((i) => i.title === item.title);
         if (!exists) state.news.push(item);
       } else {
-        const exists = state.music.some((i) => i.title === item.title);
-        if (!exists) state.music.push(item);
+        const exists = state.movies.some((i) => i.title === item.title);
+        if (!exists) state.movies.push(item);
       }
 
       updateLocalStorage(state);
     },
     deleteFavourite(
       state,
-      action: PayloadAction<{ type: "news" | "music"; title: string }>
+      action: PayloadAction<{ type: "news" | "movies"; title: string }>
     ) {
       const { type, title } = action.payload;
 
       if (type === "news") {
         state.news = state.news.filter((i) => i.title !== title);
       } else {
-        state.music = state.music.filter((i) => i.title !== title);
+        state.movies = state.movies.filter((i) => i.title !== title);
       }
 
       updateLocalStorage(state);

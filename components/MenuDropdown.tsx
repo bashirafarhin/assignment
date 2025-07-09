@@ -10,7 +10,7 @@ const MenuDropdown = () => {
         <Menu size={30}/>
       }
     >
-      {["news", "music", "favourites"].map((item) => (
+      {["news", "movies", "favourites"].map((item) => (
         <Link
           key={item}
           href={`/${item}`}

@@ -1,5 +1,5 @@
 import { NewspaperIcon } from "lucide-react";
-import FavNewsList from "./FavNewsList";
+import FavNewsList from "./_components/FavNewsList";
 
 const page = () => {
   return (

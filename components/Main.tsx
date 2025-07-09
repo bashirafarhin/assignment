@@ -1,5 +1,6 @@
 import React from "react";
-import TrendingSection from "./TrendingSection";
+// import TrendingNews from "./TrendingNews";
+import TrendingMovies from "./TrendingMovies";
 
 const Main = () => {
   return (
@@ -8,7 +9,8 @@ const Main = () => {
       <p className="text-base sm:text-lg font-normal mt-4">
         Click on the above buttons to reach your destination
       </p>
-      <TrendingSection />
+      {/* <TrendingNews /> */}
+      <TrendingMovies />
     </div>
   );
 };
