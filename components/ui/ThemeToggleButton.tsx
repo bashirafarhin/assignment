@@ -2,25 +2,40 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import type { JSX } from "react";
 import Button from "./Button";
 import { Moon, Sun } from "lucide-react";
 
-const ThemeToggleButton = (): JSX.Element | null => {
-  // const { theme, setTheme, resolvedTheme } = useTheme();
+const ThemeToggleButton = () => {
   const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  // Avoid hydration mismatch
-  useEffect(() => setMounted(true), []);
+  // Step 1: On mount, read from localStorage and set theme
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("theme");
+    if (storedTheme === "dark" || storedTheme === "light") {
+      setTheme(storedTheme);
+    } else {
+      localStorage.setItem("theme", "dark");
+      setTheme("dark");
+    }
+
+    setMounted(true);
+  }, [setTheme]);
+
+  // Step 2: Handle toggle and persist to localStorage
+  const toggleTheme = () => {
+    const newTheme = resolvedTheme === "dark" ? "light" : "dark";
+    localStorage.setItem("theme", newTheme);
+    setTheme(newTheme);
+  };
 
   if (!mounted) return null;
 
   const isDark = resolvedTheme === "dark";
 
   return (
-    <Button onClick={() => setTheme(isDark ? "light" : "dark")}>
-      <span>{isDark ? <Sun /> : <Moon />}</span>
+    <Button onClick={toggleTheme}>
+      {isDark ? <Sun size={18} /> : <Moon size={18} />}
     </Button>
   );
 };

@@ -2,53 +2,40 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { NewsArticle, NewsState } from "@/types/news";
 
-// interface FetchNewsParams {
-//   category?: string;
-//   page?: number;
-//   keyword?: string;
-// }
-
-// API key stored in env
-const API_KEY = process.env.NEXT_PUBLIC_NEWS_API_KEY!;
-
-// Async thunk
 export const fetchNews = createAsyncThunk<
   NewsArticle[],
   void,
   { state: { news: NewsState }; rejectValue: string }
 >("news/fetchNews", async (_, thunkAPI) => {
-  const {
-    category = "entertainment",
-    page = 1,
-    keyword,
-  } = thunkAPI.getState().news;
-  console.log(category, page, keyword);
-  let url = "";
+  let { category } = thunkAPI.getState().news;
+  const { page = 1, keyword } = thunkAPI.getState().news;
 
-  if (keyword) {
-    // Search by keyword only
-    url = `https://newsapi.org/v2/top-headlines?q=${encodeURIComponent(
-      keyword
-    )}&page=${page}&pageSize=5`;
-  } else {
-    // Default by category + country
-    url = `https://newsapi.org/v2/top-headlines?country=us&category=${category}&page=${page}&pageSize=5`;
+  if (!category) {
+    if (typeof window !== "undefined") {
+      const storedCategory = localStorage.getItem("selectedCategory");
+      category = storedCategory || "entertainment";
+      localStorage.setItem("selectedCategory", category); // persist if not already
+    } else {
+      category = "entertainment";
+    }
   }
 
+  const query = new URLSearchParams({
+    category,
+    page: String(page),
+    ...(keyword && { keyword }),
+  });
+
   try {
-    const response = await axios.get(url, {
-      headers: {
-        "X-Api-Key": API_KEY,
-      },
-    });
-    return response.data.articles as NewsArticle[];
+    const response = await axios.get(`/api/news?${query.toString()}`);
+    return response.data as NewsArticle[];
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       return thunkAPI.rejectWithValue(
-        error.response?.data?.message || "Failed to fetch news"
+        error.response?.data?.error || "custom error"
       );
     }
-    return thunkAPI.rejectWithValue("Unknown error occurred");
+    return thunkAPI.rejectWithValue("custom error");
   }
 });
 

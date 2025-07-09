@@ -11,7 +11,6 @@ import Loader from "@/components/ui/Loader";
 const NewsList: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { data, loading, error, page } = useSelector((state: RootState) => state.news);
-
   useEffect(() => {
     dispatch(fetchNews());
   }, [dispatch, page]);
