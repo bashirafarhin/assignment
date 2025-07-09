@@ -5,7 +5,7 @@ import Dropdown from "@/components/ui/Dropdown";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/Redux/store";
 import { setCategory } from "@/Redux/slices/news";
-import { fetchNews } from "@/Redux/slices/news";
+import { fetchNews } from "@/Redux/reducers/news";
 
 const CategoriesDropdown: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
