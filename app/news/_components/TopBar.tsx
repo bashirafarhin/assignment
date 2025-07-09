@@ -4,7 +4,8 @@ import React, { useState, useEffect } from "react";
 import CategoriesDropdown from "./CategoriesDropdown";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/Redux/store";
-import { setKeyword, fetchNews } from "@/Redux/slices/news";
+import { setKeyword } from "@/Redux/slices/news";
+import { fetchNews } from "@/Redux/reducers/news";
 
 const TopBar = () => {
   const [search, setSearch] = useState("");

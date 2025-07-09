@@ -1,4 +1,3 @@
-// types/news.ts
 export interface NewsArticle {
   title: string;
   description: string;
@@ -16,4 +15,10 @@ export interface NewsState {
   category: string;
   page: number;
   keyword: string;
+}
+
+export interface TrendingState {
+  data: NewsArticle[];
+  loading: boolean;
+  error: string | null;
 }

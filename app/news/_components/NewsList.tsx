@@ -2,7 +2,8 @@
 
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchNews, incrementPage } from "@/Redux/slices/news";
+import { incrementPage } from "@/Redux/slices/news";
+import { fetchNews } from "@/Redux/reducers/news";
 import { RootState, AppDispatch } from "@/Redux/store";
 import NewsCard from "@/components/NewsCard";
 import Button from "@/components/ui/Button";
