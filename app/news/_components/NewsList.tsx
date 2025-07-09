@@ -7,6 +7,7 @@ import { RootState, AppDispatch } from "@/Redux/store";
 import NewsCard from "./NewsCard";
 import Button from "@/components/ui/Button";
 import Loader from "@/components/ui/Loader";
+import toast from "react-hot-toast";
 
 const NewsList: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -19,8 +20,11 @@ const NewsList: React.FC = () => {
     dispatch(incrementPage());
   };
 
+  useEffect(() => {
+  if (error) toast.error(error);
+}, [error]);
+
   if (loading && page === 1) return <Loader />;
-  if (error) return <p className="text-red-500">Error: {error}</p>;
 
   return (
     <>

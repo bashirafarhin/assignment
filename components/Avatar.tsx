@@ -1,30 +1,3 @@
-// "use client";
-
-// import { useSession } from "next-auth/react";
-// import Image from "next/image";
-
-// const Avatar = () => {
-//   const { data: session } = useSession();
-//   const user = session?.user;
-
-//   return (
-//     <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-white font-semibold overflow-hidden">
-//       {user?.image ? (
-//         <Image
-//           src={user.image}
-//           alt={user.name || "User"}
-//           width={40}
-//           height={40}
-//           className="rounded-full object-cover w-full h-full"
-//         />
-//       ) : (
-//         user?.name?.charAt(0).toUpperCase()
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Avatar;
 "use client";
 
 import { signOut, useSession } from "next-auth/react";
