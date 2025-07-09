@@ -57,5 +57,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/api/news", "/favourites"], // Protected routes
+  matcher: ["/api/news"], // Protected routes
 };

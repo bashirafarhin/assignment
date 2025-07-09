@@ -1,4 +1,3 @@
-// Redux/store.ts
 import { configureStore } from '@reduxjs/toolkit';
 import { newsReducer } from './slices/news';
 import { favouritesReducer } from './slices/favourites';

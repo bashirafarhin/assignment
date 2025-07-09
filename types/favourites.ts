@@ -8,4 +8,5 @@ export interface MusicItem {
 export interface FavouritesState {
   news: NewsArticle[];
   music: MusicItem[];
+  error: string | null;
 }
