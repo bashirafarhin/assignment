@@ -10,14 +10,13 @@ import { useRouter } from "next/navigation";
 import Loader from "@/components/ui/Loader";
 import { deleteFavourite } from "@/Redux/slices/favourites";
 import Link from "next/link";
-import { Sparkle, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import toast from "react-hot-toast";
 import { NewsArticle } from "@/types/news";
 
 const FavNewsList = () => {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
-  const [ deleted ] = useState(false);
 
   const { news: favouriteNews, error } = useSelector(
     (state: RootState) => state.favourites
@@ -33,8 +32,7 @@ const FavNewsList = () => {
 
   useEffect(() => {
     dispatch(fetchFavourites());
-    // Wait for one tick to allow Redux state update
-    setTimeout(() => setLocalLoading(false), 0);
+    setTimeout(() => setLocalLoading(false), 0); // Wait for one tick to allow Redux state update
   }, [dispatch]);
 
   if (localLoading) {
@@ -86,11 +84,7 @@ const FavNewsList = () => {
                   </Link>
                 </Button>
                 <Button onClick={() => handleDelete(article)}>
-                  {deleted ? (
-                    <Sparkle />
-                  ) : (
-                    <Sparkles className="text-yellow-900" />
-                  )}
+                  <Sparkles className="text-yellow-900" />
                 </Button>
               </div>
           }

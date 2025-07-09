@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchNews, incrementPage } from "@/Redux/slices/news";
 import { RootState, AppDispatch } from "@/Redux/store";
@@ -11,11 +11,11 @@ import toast from "react-hot-toast";
 import { Sparkle, Sparkles } from "lucide-react";
 import { NewsArticle } from "@/types/news";
 import { insertFavourite } from "@/Redux/slices/favourites";
+import { deleteFavourite } from "@/Redux/slices/favourites";
 import Link from "next/link";
 
 const NewsList: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const [selected, setSelected] = useState(false);
   const { data, loading, error, page } = useSelector(
     (state: RootState) => state.news
   );
@@ -27,13 +27,22 @@ const NewsList: React.FC = () => {
     dispatch(incrementPage());
   };
 
+  const favouriteNews = useSelector(
+    (state: RootState) => state.favourites.news
+  );
+
+  const handleDelete = (article: NewsArticle) => {
+    dispatch(deleteFavourite({ type: "news", title: article.title }));
+    toast.success("Removed from favourites");
+  };
+
+  const isArticleFavourite = (article: NewsArticle) => {
+    return favouriteNews.some((fav) => fav.title === article.title);
+  };
+
   const addToFavourites = (article: NewsArticle) => {
-    if (selected) {
-      return toast.success("Already added to favourites");
-    }
     dispatch(insertFavourite({ type: "news", item: article }));
     toast.success("added to favourites");
-    setSelected(true);
   };
 
   useEffect(() => {
@@ -61,13 +70,12 @@ const NewsList: React.FC = () => {
                     Read More
                   </Link>
                 </Button>
-                <Button onClick={() => addToFavourites(article)}>
-                  {selected ? (
-                    <Sparkles className="text-yellow-900" />
-                  ) : (
-                    <Sparkle />
-                  )}
-                </Button>
+                {
+                  isArticleFavourite(article) ?
+                  <Button onClick={() => handleDelete(article)}><Sparkles className="text-yellow-900" /></Button> :
+                  <Button onClick={() => addToFavourites(article)}><Sparkle /></Button>
+                  
+                }
               </div>
             }
           />
