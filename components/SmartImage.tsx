@@ -1,27 +1,8 @@
-import Image from "next/image";
-import { useMemo, useState } from "react";
+"use client";
 
-const WHITELISTED_DOMAINS = [
-  "media.cnn.com",
-  "bbc.co.uk",
-  "static01.nyt.com",
-  "i.guim.co.uk",
-  "cdn.vox-cdn.com",
-  "deadline.com",
-  "npr.brightspotcdn.com"
-];
-
-// Replace with your own fallback image (local or external)
-const FALLBACK_IMAGE = "/fallback.jpg"; // must exist in your public folder
-
-function isWhitelisted(url: string): boolean {
-  try {
-    const { hostname } = new URL(url);
-    return WHITELISTED_DOMAINS.includes(hostname);
-  } catch {
-    return false;
-  }
-}
+import { useState, useEffect } from "react";
+const FALLBACK_IMAGE = "/fallback.jpeg";
+console.log(FALLBACK_IMAGE);
 
 interface SmartImageProps {
   src: string;
@@ -33,37 +14,48 @@ interface SmartImageProps {
 
 const SmartImage = ({
   src,
-  alt = "",
+  alt = "image",
   width = 500,
   height = 300,
-  className,
+  className = "",
 }: SmartImageProps) => {
   const [imgSrc, setImgSrc] = useState(src);
-  const isOptimizable = useMemo(() => isWhitelisted(src), [src]);
+  const [, setSafeToUseImage] = useState(false);
 
-  const handleError = () => setImgSrc(FALLBACK_IMAGE);
+  useEffect(() => {
+    try {
+      const { hostname } = new URL(src);
+      const WHITELISTED_DOMAINS = [
+        "media.cnn.com",
+        "bbc.co.uk",
+        "static01.nyt.com",
+        "i.guim.co.uk",
+        "cdn.vox-cdn.com",
+        "deadline.com",
+        "npr.brightspotcdn.com",
+      ];
 
-  if (isOptimizable) {
-    return (
-      <Image
-        src={imgSrc}
-        alt={alt}
-        width={width}
-        height={height}
-        onError={handleError}
-        className={className}
-      />
-    );
-  }
+      if (WHITELISTED_DOMAINS.some(domain => hostname.endsWith(domain))) {
+        setSafeToUseImage(true);
+      }
+    } catch {
+      setSafeToUseImage(false);
+    }
+  }, [src]);
 
+  const handleError = () => {
+    if (imgSrc !== FALLBACK_IMAGE) setImgSrc(FALLBACK_IMAGE);
+  };
+
+  // Use plain <img> everywhere to avoid crashing
   return (
     <img
       src={imgSrc}
       alt={alt}
       width={width}
       height={height}
-      loading="lazy"
       onError={handleError}
+      loading="lazy"
       className={className}
     />
   );

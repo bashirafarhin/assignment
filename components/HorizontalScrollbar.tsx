@@ -26,34 +26,34 @@ const HorizontalScroller: React.FC<HorizontalScrollerProps> = ({
   }, [children]);
 
   return (
-    <div className="relative">
-      <div className="absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-white dark:from-black z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-white dark:from-black z-10 pointer-events-none" />
+    // <div className="relative">
+    //   <div className="absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-[rgba(255,255,255,0.9)] dark:from-[rgba(0,0,0,0.9)] z-10 pointer-events-none" />
+    //   <div className="absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-[rgba(255,255,255,0.9)] dark:from-[rgba(0,0,0,0.9)] z-10 pointer-events-none" />
+    <motion.div
+      className="overflow-x-auto overflow-y-hidden hide-scrollbar cursor-grab active:cursor-grabbing px-2"
+      whileTap={{ cursor: "grabbing" }}
+    >
       <motion.div
-        className="overflow-x-auto overflow-y-hidden hide-scrollbar cursor-grab active:cursor-grabbing px-2"
-        whileTap={{ cursor: "grabbing" }}
+        ref={containerRef}
+        className="flex w-fit px-4 py-4 items-center"
+        drag="x"
+        dragConstraints={{ left: -dragWidth, right: 0 }}
+        initial={{ x: 100 }}
+        animate={{ x: 0 }}
+        transition={{ type: "spring", stiffness: 100 }}
       >
-        <motion.div
-          ref={containerRef}
-          className="flex w-fit px-4 py-4 items-center"
-          drag="x"
-          dragConstraints={{ left: -dragWidth, right: 0 }}
-          initial={{ x: 100 }}
-          animate={{ x: 0 }}
-          transition={{ type: "spring", stiffness: 100 }}
-        >
-          {children.map((child, index) => (
-            <div
-              key={index}
-              className="shrink-0"
-              style={{ width: itemWidth, marginRight: gap }}
-            >
-              {child}
-            </div>
-          ))}
-        </motion.div>
+        {children.map((child, index) => (
+          <div
+            key={index}
+            className="shrink-0"
+            style={{ width: itemWidth, marginRight: gap }}
+          >
+            {child}
+          </div>
+        ))}
       </motion.div>
-    </div>
+    </motion.div>
+    // </div>
   );
 };
 
