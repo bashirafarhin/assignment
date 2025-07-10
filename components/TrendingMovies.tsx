@@ -8,8 +8,10 @@ import Loader from "@/components/ui/Loader";
 import HorizontalScroller from "./HorizontalScrollbar";
 import toast from "react-hot-toast";
 import { fetchMovies } from "@/Redux/reducers/movies";
+import { useTranslation } from "react-i18next";
 
 const TrendingMovies = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const { data, loading, error } = useSelector(
     (state: RootState) => state.movies
@@ -26,7 +28,7 @@ const TrendingMovies = () => {
   return (
     <div className="space-y-8">
       <h1 className="font-bold text-6xl text-center">
-        Trending Movies
+        {t("trendingMovies")}
       </h1>
       { loading && <Loader />}
       {data && <div className="w-[80vw] mt-6">

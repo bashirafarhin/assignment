@@ -8,8 +8,10 @@ import NewsCard from "@/components/NewsCard";
 import Loader from "@/components/ui/Loader";
 import toast from "react-hot-toast";
 import HorizontalScroller from "./HorizontalScrollbar";
+import { useTranslation } from "react-i18next";
 
 const TrendingNews = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const { data, loading, error } = useSelector(
     (state: RootState) => state.trending
@@ -30,7 +32,7 @@ const TrendingNews = () => {
   return (
     <div className="">
       <h1 className="font-bold text-6xl text-center">
-        Trending News
+        {t("trendingNews")}
       </h1>
       <div className="w-[80vw] mt-5">
         <HorizontalScroller itemWidth={320} gap={20}>

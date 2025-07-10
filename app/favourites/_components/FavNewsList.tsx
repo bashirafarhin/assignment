@@ -9,8 +9,10 @@ import Button from "@/components/ui/Button";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/ui/Loader";
 import MovieCard from "@/components/MovieCard";
+import { useTranslation } from "react-i18next";
 
 const FavNewsList = () => {
+  const { t } = useTranslation()
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
 
@@ -50,7 +52,7 @@ const FavNewsList = () => {
     return (
       <div className="flex flex-col justify-center items-center">
         <div className="text-text mb-2">No favourite yet.</div>
-        <Button onClick={() => router.push("/news")}>Browse now</Button>
+        <Button onClick={() => router.push("/news")}>{t("browseMore")}</Button>
       </div>
     );
   }

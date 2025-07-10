@@ -11,6 +11,7 @@ import { RootState } from "@/Redux/store";
 import toast from "react-hot-toast";
 import { deleteFavourite } from "@/Redux/slices/favourites";
 import { insertFavourite } from "@/Redux/slices/favourites";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   movie: Movie;
@@ -19,7 +20,7 @@ interface Props {
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 const MovieCard: React.FC<Props> = ({ movie }) => {
-
+  const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
 
   const favouriteMovies = useSelector(
@@ -91,7 +92,7 @@ const MovieCard: React.FC<Props> = ({ movie }) => {
               rel="noopener noreferrer"
               className="inline-block hover:px-2 transition-all duration-300 ease-in-out"
             >
-              Read More
+               {t("readMore")}
             </Link>
           </Button>
           {isArticleFavourite(movie) ? (

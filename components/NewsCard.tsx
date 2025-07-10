@@ -11,12 +11,14 @@ import { insertFavourite } from "@/Redux/slices/favourites";
 import { deleteFavourite } from "@/Redux/slices/favourites";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   article: NewsArticle;
 }
 
 const NewsCard: React.FC<Props> = ({ article }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
 
   const favouriteNews = useSelector(
@@ -76,7 +78,7 @@ const NewsCard: React.FC<Props> = ({ article }) => {
               rel="noopener noreferrer"
               className="inline-block hover:px-2 transition-all duration-300 ease-in-out"
             >
-              Read More
+              {t("readMore")}
             </Link>
           </Button>
           {isArticleFavourite(article) ? (
