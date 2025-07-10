@@ -1,12 +1,8 @@
 import { NewsArticle } from "./news";
-
-export interface MoviesItem {
-  id: string;
-  title: string;
-}
+import { Movie } from "./movie";
 
 export interface FavouritesState {
   news: NewsArticle[];
-  movies: MoviesItem[];
+  movies: Movie[];
   error: string | null;
 }

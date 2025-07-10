@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { FavouritesState, MoviesItem } from "@/types/favourites";
+import type { FavouritesState } from "@/types/favourites";
 import type { NewsArticle } from "@/types/news";
+import { Movie } from "@/types/movie";
 import { getFavouritesFromLocalStorage, updateLocalStorage } from "../reducers/favourites";
 
 const initialState: FavouritesState = {
@@ -31,10 +32,12 @@ const favouritesSlice = createSlice({
         item: NewsArticle;
       } | {
         type: "movies";
-        item: MoviesItem;
+        item: Movie;
       }>
     ) {
       const { type, item } = action.payload;
+
+      console.log("slice",type, item);
 
       if (type === "news") {
         const exists = state.news.some((i) => i.title === item.title);

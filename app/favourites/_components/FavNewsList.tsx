@@ -8,31 +8,21 @@ import NewsCard from "@/components/NewsCard";
 import Button from "@/components/ui/Button";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/ui/Loader";
-import { deleteFavourite } from "@/Redux/slices/favourites";
-import Link from "next/link";
-import { Sparkles } from "lucide-react";
-import toast from "react-hot-toast";
-import { NewsArticle } from "@/types/news";
+import MovieCard from "@/components/MovieCard";
 
 const FavNewsList = () => {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
 
-  const { news: favouriteNews, error } = useSelector(
+  const { news: favouriteNews, movies: favouriteMovies, error } = useSelector(
     (state: RootState) => state.favourites
   );
 
   const [localLoading, setLocalLoading] = useState(true);
 
-    const handleDelete = (article: NewsArticle) => {
-    dispatch(deleteFavourite({ type: "news", title: article.title }));
-    toast.success("Removed from favourites");
-  };
-
-
   useEffect(() => {
     dispatch(fetchFavourites());
-    setTimeout(() => setLocalLoading(false), 0); // Wait for one tick to allow Redux state update
+    setTimeout(() => setLocalLoading(false), 0);
   }, [dispatch]);
 
   if (localLoading) {
@@ -56,10 +46,10 @@ const FavNewsList = () => {
     );
   }
 
-  if (favouriteNews.length === 0) {
+  if (favouriteNews.length === 0 && favouriteMovies.length ===0) {
     return (
       <div className="flex flex-col justify-center items-center">
-        <div className="text-text">No favourite news yet.</div>
+        <div className="text-text mb-2">No favourite yet.</div>
         <Button onClick={() => router.push("/news")}>Browse now</Button>
       </div>
     );
@@ -71,23 +61,12 @@ const FavNewsList = () => {
         <NewsCard
           key={index}
           article={article}
-          footer={
-            <div className="w-fit flex mt-4 gap-3">
-                <Button>
-                  <Link
-                    href={article.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block hover:px-2 transition-all duration-300 ease-in-out"
-                  >
-                    Read More
-                  </Link>
-                </Button>
-                <Button onClick={() => handleDelete(article)}>
-                  <Sparkles className="text-yellow-900" />
-                </Button>
-              </div>
-          }
+        />
+      ))}
+      {favouriteMovies.map((movie, index) => (
+        <MovieCard
+          key={index}
+          movie={movie}
         />
       ))}
     </div>

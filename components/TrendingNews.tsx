@@ -23,19 +23,22 @@ const TrendingNews = () => {
     if (error) toast.error(error);
   }, [error]);
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
-    <div className="space-y-8">
+    <div className="">
       <h1 className="font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-center">
         Trending News
       </h1>
-      { loading && <Loader />}
-      { data && <div className="w-[80vw] mt-5">
+      <div className="w-[80vw] mt-5">
         <HorizontalScroller itemWidth={320} gap={20}>
         {data.map((article, index) => (
           <NewsCard key={index} article={article} />
         ))}
       </HorizontalScroller>
-      </div>}
+      </div>
     </div>
   );
 };

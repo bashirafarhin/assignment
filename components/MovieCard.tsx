@@ -2,16 +2,44 @@
 
 import React from "react";
 import { Movie } from "@/types/movie";
-
+import Button from "./ui/Button";
+import Link from "next/link";
+import { Sparkles, Sparkle } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "@/Redux/store";
+import { RootState } from "@/Redux/store";
+import toast from "react-hot-toast";
+import { deleteFavourite } from "@/Redux/slices/favourites";
+import { insertFavourite } from "@/Redux/slices/favourites";
 
 interface Props {
   movie: Movie;
-  footer?: React.ReactNode;
 }
 
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
-const MovieCard: React.FC<Props> = ({ movie, footer }) => {
+const MovieCard: React.FC<Props> = ({ movie }) => {
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  const favouriteMovies = useSelector(
+    (state: RootState) => state.favourites.movies
+  );
+
+  const handleDelete = (movie: Movie) => {
+    dispatch(deleteFavourite({ type: "movies", title: movie.title }));
+    toast.success("Removed from favourites");
+  };
+
+  const isArticleFavourite = (movie: Movie) => {
+    return favouriteMovies.some((fav) => fav.title === movie.title);
+  };
+
+  const addToFavourites = (movie: Movie) => {
+    dispatch(insertFavourite({ type: "movies", item: movie }));
+    toast.success("added to favourites");
+  };
+
   return (
     <div className="max-w-md mx-auto overflow-hidden rounded-xl border border-gray-300 dark:bg-bg shadow-md font-medium">
       {/* Poster */}
@@ -54,7 +82,28 @@ const MovieCard: React.FC<Props> = ({ movie, footer }) => {
           </p>
         </div>
 
-        {footer && <div>{footer}</div>}
+        {/* {footer && <div>{footer}</div>} */}
+        <div className="w-fit flex mt-4 gap-3">
+          <Button>
+            <Link
+              href={"#"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block hover:px-2 transition-all duration-300 ease-in-out"
+            >
+              Read More
+            </Link>
+          </Button>
+          {isArticleFavourite(movie) ? (
+            <Button onClick={() => handleDelete(movie)}>
+              <Sparkles className="text-yellow-900" />
+            </Button>
+          ) : (
+            <Button onClick={() => addToFavourites(movie)}>
+              <Sparkle />
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );
