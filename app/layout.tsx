@@ -39,7 +39,7 @@ export default function RootLayout({
             <StoreProvider>
               <LangaugeProvider>
                 <Header />
-                {/* <Suspense fallback={<Loader />}>{children}</Suspense> */}
+                <Suspense fallback={<Loader />}>{children}</Suspense>
                 <ToastProvider />
                 <Footer />
               </LangaugeProvider>
