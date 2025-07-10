@@ -110,7 +110,7 @@ This project is a **Personalized Content Dashboard** built using **React**, **Ne
 
 ### 3. Search
 
-* Debounced input in `TopBar`.
+* Debounced input.
 * Automatically dispatches Redux action on query change.
 
 ### 4. Advanced UI/UX

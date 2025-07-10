@@ -25,7 +25,7 @@ const TrendingMovies = () => {
 
   return (
     <div className="space-y-8">
-      <h1 className="font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-center">
+      <h1 className="font-bold text-6xl text-center">
         Trending Movies
       </h1>
       { loading && <Loader />}

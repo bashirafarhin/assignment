@@ -29,9 +29,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${poppins.className} antialiased flex flex-col justify-between min-h-screen items-center`}
+        className={`${poppins.className} relative antialiased flex flex-col justify-between min-h-screen items-center`}
       >
-        <NextThemeProvider>
+        <div className="fixed w-[30vw] mx-auto aspect-square bg-gradient-to-br from-sky-400 to-transparent rounded-full blur-3xl opacity-60 z-[-11]"></div>
+          <NextThemeProvider>
           <AuthProvider>
           <StoreProvider>
           <Header />

@@ -1,4 +1,6 @@
 "use client";
+
+import React from "react";
 import { NewsArticle } from "@/types/news";
 import SmartImage from "./SmartImage";
 import Button from "./ui/Button";
@@ -92,4 +94,4 @@ const NewsCard: React.FC<Props> = ({ article }) => {
   );
 };
 
-export default NewsCard;
+export default React.memo(NewsCard);
