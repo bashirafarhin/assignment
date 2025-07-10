@@ -9,8 +9,10 @@ import NewsCard from "@/components/NewsCard";
 import Button from "@/components/ui/Button";
 import Loader from "@/components/ui/Loader";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 const NewsList: React.FC = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const { data, loading, error, page } = useSelector(
     (state: RootState) => state.news
@@ -41,7 +43,7 @@ const NewsList: React.FC = () => {
       </div>
       <div className="flex justify-center my-6">
         <Button onClick={loadMore} disabled={loading}>
-          {loading ? "Loading more..." : "Load More"}
+          {loading ? `${t("loadingMore")}...` : t("loadMore")}
         </Button>
       </div>
     </>

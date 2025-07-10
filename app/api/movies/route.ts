@@ -27,12 +27,10 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    console.log("backend",url);
     const res = await fetch(url);
     const data = await res.json();
     return NextResponse.json(data);
   } catch (error : unknown) {
-    console.log("backend",error)
     const message = error instanceof Error ? error.message : "Failed to fetch data";
     return NextResponse.json({ error: message }, { status: 500 });
   }

@@ -6,8 +6,10 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/Redux/store";
 import { setCategory } from "@/Redux/slices/news";
 import { fetchNews } from "@/Redux/reducers/news";
+import { useTranslation } from "react-i18next";
 
 const CategoriesDropdown: React.FC = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
 
   const handleSelect = (item: string) => {
@@ -21,7 +23,7 @@ const CategoriesDropdown: React.FC = () => {
     <Dropdown
       trigger={
         <div className="border border-bg w-full px-2 py-1 rounded-full">
-          Categories
+          {t("categories")}
         </div>
       }
     >
@@ -39,7 +41,7 @@ const CategoriesDropdown: React.FC = () => {
           onClick={() => handleSelect(item)}
           className="block w-full text-left text-text font-medium px-2 py-1 hover:cursor-pointer"
         >
-          {item}
+          {t(item)}
         </button>
       ))}
     </Dropdown>

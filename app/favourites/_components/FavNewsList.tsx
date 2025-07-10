@@ -51,7 +51,7 @@ const FavNewsList = () => {
   if (favouriteNews.length === 0 && favouriteMovies.length ===0) {
     return (
       <div className="flex flex-col justify-center items-center">
-        <div className="text-text mb-2">No favourite yet.</div>
+        <div className="text-text mb-2">{t("noFav")}</div>
         <Button onClick={() => router.push("/news")}>{t("browseMore")}</Button>
       </div>
     );

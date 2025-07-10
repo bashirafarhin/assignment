@@ -8,21 +8,23 @@ import Button from "@/components/ui/Button";
 import { useDebounce } from "@/hooks/useDebounce";
 import { setEndpoint } from "@/Redux/slices/movies";
 import { RootState } from "@/Redux/store";
-
-const CATEGORIES = [
-  { label: "Popular", value: "popular" },
-  { label: "Top Rated", value: "top_rated" },
-  { label: "Upcoming", value: "upcoming" },
-  { label: "Now Playing", value: "now_playing" },
-];
+import { useTranslation } from "react-i18next";
 
 const TopBar = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const [query, setQuery] = useState("");
   const debouncedQuery = useDebounce(query, 500);
   const { endpoint } = useSelector(
     (state: RootState) => state.movies
   );
+
+  const CATEGORIES = [
+    { label: t("popular"), value: "popular" },
+    { label: t("topRated"), value: "top_rated" },
+    { label: t("upcoming"), value: "upcoming" },
+    { label: t("nowPlaying"), value: "now_playing" },
+  ];
 
   // Dispatch when debouncedQuery updates
   useEffect(() => {

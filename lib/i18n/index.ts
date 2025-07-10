@@ -7,7 +7,8 @@ i18n
   .use(initReactI18next) // to inform i18 that its a react app
   .init({
     debug: true, // make this false in production
-    lng: "hi",
+    fallbackLng: "en",
+    lng: "en",
     resources: {
       en: {
         translation: {
@@ -20,6 +21,20 @@ i18n
           trendingMovies: "Trending Movies",
           readMore: "Read More",
           browseMore: "Browse more",
+          favTagLine: "We got your favourites",
+          newsTagLine: "We got every information for you",
+          noFav: "No favourite yet",
+          loadMore: "Load More",
+          loadingMore: "Loading",
+          moviesTagLine: "We got every Movie for you",
+          categories: "Categories",
+          Business: "Business",
+          Entertainment: "Entertainment",
+          General: "General",
+          Health: "Health",
+          Science: "Science",
+          Technology: "Technology",
+          Sports: "Sports",
           footer: {
             follow: "Follow us",
             legal: "Legal",
@@ -28,6 +43,10 @@ i18n
             newsletter: "Newsletter",
             emailPlaceholder: "Your email",
             rights: "All Rights Reserved.",
+            popular: "Popular",
+            topRated: "Top rated",
+            upcoming: "Upcoming",
+            nowPlaying: "Now playing",
           },
           main: {
             welcome: "Welcome",
@@ -46,6 +65,24 @@ i18n
           trendingMovies: "प्रचलित फ़िल्में",
           readMore: "और पढ़ें",
           browseMore: "और ब्राउज़ करें",
+          favTagLine: "हमने आपके पसंदीदा सहेज लिए हैं",
+          noFav: "अभी तक कोई पसंदीदा नहीं है।",
+          newsTagLine: "हम आपके लिए हर जानकारी लेकर आए हैं।",
+          loadMore: "और लोड करें",
+          loadingMore: "और लोड हो रहा है...",
+          popular: "लोकप्रिय",
+          topRated: "सर्वश्रेष्ठ रेटेड",
+          upcoming: "आगामी",
+          nowPlaying: "अब चल रही हैं",
+          moviesTagLine: "हमने आपके लिए सब कुछ तैयार किया है",
+          categories: "श्रेणियाँ",
+          Business: "व्यवसाय",
+          Entertainment: "मनोरंजन",
+          General: "सामान्य",
+          Health: "स्वास्थ्य",
+          Science: "विज्ञान",
+          Technology: "प्रौद्योगिकी",
+          Sports: "खेल",
           footer: {
             follow: "हमसे जुड़ें",
             legal: "कानूनी",

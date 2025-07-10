@@ -36,9 +36,6 @@ const favouritesSlice = createSlice({
       }>
     ) {
       const { type, item } = action.payload;
-
-      console.log("slice",type, item);
-
       if (type === "news") {
         const exists = state.news.some((i) => i.title === item.title);
         if (!exists) state.news.push(item);

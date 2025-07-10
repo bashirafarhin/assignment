@@ -11,8 +11,10 @@ import MovieCard from "@/components/MovieCard";
 import Loader from "@/components/ui/Loader";
 import Button from "@/components/ui/Button";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 const MovieList = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const { data, loading, error, endpoint, page } = useSelector(
     (state: RootState) => state.movies
@@ -50,7 +52,7 @@ const MovieList = () => {
       {/* Load More */}
       <div className="flex justify-center my-6">
         <Button onClick={handleLoadMore} disabled={loading}>
-          {loading ? "Loading more..." : "Load More"}
+          {loading ? `${t("loadingMore")}...` : t("loadMore")}
         </Button>
       </div>
     </>
