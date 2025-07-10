@@ -14,7 +14,6 @@ const TrendingMovies = () => {
   const { data, loading, error } = useSelector(
     (state: RootState) => state.movies
   );
-  console.log("component",data,loading,error);
 
   useEffect(() => {
     dispatch(fetchMovies({ endpoint: "popular", page: 1 }));
@@ -24,20 +23,19 @@ const TrendingMovies = () => {
     if (error) toast.error(error);
   }, [error]);
 
-  if (loading) return <Loader />;
-
   return (
-    <div className="my-10">
-      <h1 className="font-bold text-4xl sm:text-5xl text-center">
+    <div className="space-y-8">
+      <h1 className="font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-center">
         Trending Movies
       </h1>
-      <div className="w-[80vw] mt-6">
+      { loading && <Loader />}
+      {data && <div className="w-[80vw] mt-6">
         <HorizontalScroller itemWidth={320} gap={20}>
           {data.map((movie, index) => (
             <MovieCard key={index} movie={movie} />
           ))}
         </HorizontalScroller>
-      </div>
+      </div>}
     </div>
   );
 };
