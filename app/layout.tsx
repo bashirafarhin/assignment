@@ -9,6 +9,7 @@ import { Suspense } from "react";
 import ToastProvider from "@/Providers/ToastProvider";
 import StoreProvider from "@/Providers/StoreProvider";
 import AuthProvider from "@/Providers/AuthProvider";
+import LangaugeProvider from "@/Providers/LangaugeProvider";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -32,14 +33,17 @@ export default function RootLayout({
         className={`${poppins.className} relative antialiased flex flex-col justify-between min-h-screen items-center`}
       >
         <div className="fixed w-[30vw] mx-auto aspect-square bg-gradient-to-br from-sky-400 to-transparent rounded-full blur-3xl opacity-60 z-[-11]"></div>
-          <NextThemeProvider>
+
+        <NextThemeProvider>
           <AuthProvider>
-          <StoreProvider>
-          <Header />
-          <Suspense fallback={<Loader />}>{children}</Suspense>
-          <ToastProvider/>
-          <Footer />
-          </StoreProvider>
+            <StoreProvider>
+              <LangaugeProvider>
+                <Header />
+                {/* <Suspense fallback={<Loader />}>{children}</Suspense> */}
+                <ToastProvider />
+                <Footer />
+              </LangaugeProvider>
+            </StoreProvider>
           </AuthProvider>
         </NextThemeProvider>
       </body>
