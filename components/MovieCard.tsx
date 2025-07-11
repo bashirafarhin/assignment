@@ -42,7 +42,7 @@ const MovieCard: React.FC<Props> = ({ movie }) => {
   };
 
   return (
-    <div className="max-w-md mx-auto overflow-hidden rounded-xl border border-gray-300 dark:bg-bg shadow-md font-medium">
+    <div className="max-w-md mx-auto overflow-hidden rounded-xl border border-gray-300 dark:bg-bg shadow-md font-medium transition-all duration-300 ease-in-out hover:border-white/60 hover:shadow-lg hover:scale-105">
       {/* Poster */}
       {movie.poster_path ? (
         <img

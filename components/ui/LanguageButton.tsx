@@ -20,8 +20,8 @@ const LanguageButton = () => {
   return (
     <Dropdown
       trigger={
-        <div className="border border-bg px-2 py-1 rounded-full">
-          <Languages />
+        <div className="border border-bg px-2 py-2 rounded-full">
+          <Languages size={18}/>
         </div>
       }
     >
@@ -29,7 +29,7 @@ const LanguageButton = () => {
         <button
           key={item.code}
           onClick={() => handleLanguage(item.code)}
-          className={`block w-fit text-left text-text font-medium px-3 py-2 hover:cursor-pointer ${
+          className={`block w-fit text-left text-text font-medium px-2 py-1 rounded-md hover:cursor-pointer ${
             item.code === i18n.language ? "bg-blue-500" : ""
           }`}
         >

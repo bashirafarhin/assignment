@@ -60,7 +60,7 @@ const Dropdown = ({ trigger, children, className }: DropdownProps) => {
             exit="hidden"
             variants={dropdownVariants}
             className={clsx(
-              "absolute right-0 mt-2 w-48 bg-bg text-text rounded-md z-50 p-2",
+              "absolute right-0 bg-bg text-text rounded-md z-50",
               className
             )}
           >

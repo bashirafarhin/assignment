@@ -9,11 +9,8 @@ const Main = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="my-[5rem] w-[80vw] flex flex-col justify-center items-center space-y-8">
+    <div className="my-[5rem] w-[80vw] flex flex-col justify-center items-center space-y-15">
       <h1 className="font-bold text-7xl">{t("main.welcome")}</h1>
-      <p className="text-base sm:text-lg font-normal mt-4">
-        {t("main.description")}
-      </p>
       <TrendingNews />
       <TrendingMovies />
     </div>
