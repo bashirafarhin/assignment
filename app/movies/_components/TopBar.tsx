@@ -54,10 +54,10 @@ const TopBar = () => {
           <Button
             key={index}
             onClick={() => handleCategoryChange(cat.value)}
-            className={`cat.border border-bg w-fit px-2 py-1 rounded-full ${
+            className={`${
               endpoint === cat.value
-                ? "bg-blue-600 text-white"
-                : "bg-gray-200 dark:bg-gray-700 text-black dark:text-white"
+                ? "bg-blue-500"
+                : ""
             }`}
           >
             {cat.label}

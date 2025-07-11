@@ -26,8 +26,8 @@ const TrendingMovies = () => {
   }, [error]);
 
   return (
-    <div className="space-y-8">
-      <h1 className="font-bold text-6xl text-center">
+    <>
+      <h1 className="font-bold text-6xl text-center my-2">
         {t("trendingMovies")}
       </h1>
       { loading && <Loader />}
@@ -38,7 +38,7 @@ const TrendingMovies = () => {
           ))}
         </HorizontalScroller>
       </div>}
-    </div>
+    </>
   );
 };
 
