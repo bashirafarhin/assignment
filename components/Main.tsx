@@ -12,10 +12,10 @@ const Main = () => {
   return (
     <div className="my-[5rem] w-[80vw] flex flex-col justify-center items-center space-y-30">
       <h1 className="font-bold text-7xl">{t("main.welcome")}</h1>
-      <div className="text-7xl">
-        <TextAnimation
-          text={`Stay informed.\nStay inspired.\nGet the latest updates.`}
-        />
+      <div className="text-7xl text-center">
+        <h1>Stay informed.</h1>
+        <h1>Stay inspired.</h1>
+        <h1>Get the latest updates.</h1>
       </div>
       <TrendingNews />
       <TrendingMovies />

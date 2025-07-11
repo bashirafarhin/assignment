@@ -13,10 +13,10 @@ const TextAnimation: React.FC<TextAnimationProps> = ({ text, className = "" }) =
 
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 90%", "end 10%"], // white when inside view, gray outside
+    offset: ["start 50%", "end 10%"], // white when inside view, gray outside
   });
 
-  const color = useTransform(scrollYProgress, [0, 1], ["rgb(107 114 128)", "#ffffff"]);
+  const color = useTransform(scrollYProgress, [0, 1], ["rgb(107 114 128)", "var(--color-text)"]);
 
   const lines = text.split("\n"); // break into lines using \n
 
