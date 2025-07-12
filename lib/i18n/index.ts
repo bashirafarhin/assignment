@@ -51,6 +51,10 @@ i18n
           main: {
             welcome: "Welcome",
             description: "Click on the above buttons to reach your destination",
+            line1: "Stay informed.",
+            line2: "Stay inspired.",
+            line3: "Get the latest updates.",
+            quote: "Information is the most powerful tool of our time. What you know shapes what you do. Stay curious. Stay aware. Stay ahead."
           },
         },
       },
@@ -96,6 +100,10 @@ i18n
             welcome: "स्वागत है",
             description:
               "गंतव्य पर पहुंचने के लिए ऊपर दिए गए बटन पर क्लिक करें",
+            line1: "सूचित रहें।",
+            line2: "प्रेरित रहें।",
+            line3: "नवीनतम अपडेट प्राप्त करें।",
+            quote: "जानकारी हमारे समय का सबसे शक्तिशाली उपकरण है। आप क्या जानते हैं, वही तय करता है आप क्या करते हैं। जिज्ञासु रहें। सचेत रहें। आगे बढ़ते रहें।"
           },
         },
       },
