@@ -6,7 +6,7 @@ i18n
   .use(LanguageDetector) // to detect our anguage of browser
   .use(initReactI18next) // to inform i18 that its a react app
   .init({
-    debug: true, // make this false in production
+    debug: process.env.NEXT_ENV==="development",
     fallbackLng: "en",
     lng: "en",
     resources: {
