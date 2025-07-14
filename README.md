@@ -1,114 +1,138 @@
-# Personalized Content Dashboard - Assignment Documentation
+# 🧠 Personalized Content Dashboard - SDE Intern Assignment
 
-## Overview
+## 📄 Overview
 
-This project is a **Personalized Content Dashboard** built using **React**, **Next.js (App Router)**, **TypeScript**, **Redux Toolkit**, **Tailwind CSS**, **Framer Motion**, and **Axios**. The dashboard integrates multiple APIs (News API, TMDB API) to provide users with personalized news, movie recommendations, and more. The user experience is dynamic, interactive, and customizable.
+This is a **Personalized Content Dashboard** built as part of the SDE (Frontend) Internship assignment. It enables users to view, search, filter, and manage personalized content including **news**, **movie recommendations**, and **trending posts** from multiple APIs.
 
----
-
-
-## 🔗 Demo
-
-* Live Demo
+> **Tech Stack**: Next.js (App Router) • React • TypeScript • Redux Toolkit • Tailwind CSS • Framer Motion • Axios • i18n • NextAuth.js
 
 ---
 
-## ✅ Features Implemented
+## 🔗 Live Demo
+
+https://assignment-fawn-kappa.vercel.app/
+
+---
+
+## 🔗 Website demo
+
+Will be added soon...
+
+---
+
+## ✅ Core Features
 
 ### 1. Personalized Content Feed
 
-* **User Preferences**:
+- **User Preferences**:
+  - Users can choose favorite categories like *Technology*, *Sports*, *Business*, etc.
+  - Preferences are persisted using **Redux Toolkit** and **localStorage**.
 
-  * Categories like entertainment, sports, business are persisted in Redux/localStorage.
-* **APIs Integrated**:
+- **API Integrations**:
+  - **News API**: Top headlines fetched using filters like category, country, and query.
+  - **TMDB API**: Fetches movies using endpoints like `popular`, `top_rated`, and `search`.
+  - **Mock Social API (optional)**: Placeholder for social post rendering (if time permits).
 
-  * **News API**: Fetches top headlines with filters like `country`, `category`, `query`, `page`.
-  * **TMDB API**: Fetches movies via endpoints like `popular`, `top_rated`, `search`, with pagination support.
-* **Smart UI**:
+- **Interactive Cards**:
+  - Responsive `NewsCard` and `MovieCard` components.
+  - Show image, title, description, author/source, and CTA like **Read More** or **Play Now**.
+  - Fallback handling for broken images and external domains.
 
-  * NewsCard and MovieCard display title, image, author/source/overview, published date, and more.
-  * Includes fallback images and domain whitelisting to prevent Next.js crashes.
-
-### 2. Dashboard Layout
-
-* **TopBar**:
-
-  * Includes a debounced search bar to fetch filtered movies/news.
-  * Category buttons (`Popular`, `Top Rated`, `Upcoming`, etc.) that dispatch endpoint change.
-* **Trending Sections**:
-
-  * `TrendingNews` and `TrendingMovies` show horizontally scrolling cards using `HorizontalScroller`.
-* **Load More Pagination**:
-
-  * For both movies and news using Redux `page` state.
-
-* **Favourite Section**:
-  * user can add their `favourties` for both news and movies.
-
-### 3. Search
-
-* Debounced input.
-* Automatically dispatches Redux action on query change.
-
-### 4. Advanced UI/UX
-
-* **Dark Mode**:
-
-  * Tailwind + CSS variables + localStorage toggle.
-* **Framer Motion**:
-
-  * Used for smooth transitions and marquee animations.
-
-### 5. State Management
-
-* **Redux Toolkit**:
-
-  * Slices for `movies`, `news`, `trendingNews`, and more.
-* **Async Logic**:
-
-  * `createAsyncThunk` with axios for API integration.
-* **Persistence**:
-
-  * Settings like `dark mode` and `preferences` stored in localStorage.
-
-### 6. Authentication
-
-* Implemented user login/logout functionality using NextAuth.js.
-
-* Supports Google authentication for user sign-in.
-
-
-### 7. Optimization
-
-* **SmartImage**:
-
-  * Handles both Next.js `<Image>` and native `<img>` depending on domain whitelisting.
-* **Debounced Search**:
-
-  * `useDebounce` used to reduce API load during fast typing.
-
-### 6. i18n (internationalization)
-
-* Supports English and Hindi languages using react-i18next for seamless internationalization (i18n).
-
-<!-- ---
-
-## 🚧 Not Implemented (Due to Time)
-* Real-time updates with WebSockets/SSE.
-* Testing (Unit/E2E).
-* Internationalization (i18n). -->
+- **Infinite Scrolling**:
+  - Implemented using **IntersectionObserver** in a custom `useInfiniteScroll` hook.
+  - Optimized for both News and Movie pages.
 
 ---
 
-## 💡 Code Highlights
+### 2. User Dashboard Layout
 
-* `app/api/news/route.ts`: News API backend proxy.
-* `app/api/movies/route.ts`: TMDB API proxy with support for `/movie/{endpoint}?page=X` and `/search/movie?query=abc`.
-* `Redux/reducers/movies.ts`: Handles fetching movies via endpoint, page, and query.
-* `components/MovieCard.tsx`: Movie card display.
-* `components/TopBar.tsx`: Handles both category buttons and search.
-* `utils/useDebounce.ts`: Custom debounce hook.
+- **Main Layout**:
+  - Sidebar (optional) and responsive header with user controls.
+  - Top header includes:
+    - Search bar (debounced)
+    - Dark mode toggle
+    - Language switch
+    - User login/logout (Google)
 
+- **Sections**:
+  - **Personalized Feed**: Unified view of news, movies, and posts.
+  - **Trending**: Shows trending movies and top news using `HorizontalScroller`.
+  - **Favorites**: Content added to favorites is available across sessions via Redux store.
+
+---
+
+### 3. Search Functionality
+
+- **Debounced Search**:
+  - Implemented via custom `useDebounce` hook to reduce API load.
+  - Integrated into `TopBar`, it searches both News and Movies.
+
+- **Search Across Content**:
+  - Supports keyword search using `/search/movie` and `q` param in News API.
+
+---
+
+### 4. Advanced UI/UX Features
+
+- **Drag-and-Drop**:
+  - (WIP) Will use `Framer Motion` or `React DnD` to allow reordering content.
+
+- **Dark Mode**:
+  - Implemented using Tailwind CSS + CSS custom properties.
+  - State is persisted via `localStorage`.
+
+- **Animations**:
+  - Smooth transitions using **Framer Motion** for hover, scroll, and section shifts.
+
+---
+
+### 5. State Management & Logic
+
+- **Redux Toolkit**:
+  - Slices for `news`, `movies`, `trendingNews`, `favourites`, etc.
+
+- **Async API Handling**:
+  - `createAsyncThunk` + Axios used for all async API actions.
+
+- **Persistence**:
+  - User theme and category settings saved to `localStorage`.
+
+---
+
+### 6. Authentication
+
+- Implemented via **NextAuth.js**.
+- Supports **Google OAuth** for user login/logout.
+- User name and image shown in header.
+
+---
+
+### 7. Internationalization (i18n)
+
+- Implemented with **react-i18next**.
+- Supports English and Hindi with dynamic language toggle.
+
+---
+
+### 8. Testing Strategy (To Be Added)
+
+> **Testing will be implemented after finalizing core functionality and structure refactoring.**
+
+- **Unit Testing**: Components like `NewsCard`, `useDebounce`, `TopBar` (using React Testing Library).
+- **Integration Testing**: API data flow, Redux dispatch + reducer logic.
+- **E2E Testing**: Using **Cypress** or **Playwright** to test:
+  - Search
+  - Infinite scroll
+  - Favorites
+  - Authentication
+
+---
+
+## 🧪 Testing Roadmap
+
+```bash
+# Will be implemented after stabilizing code base
+```
 ---
 
 ## 🔗 Project Setup
