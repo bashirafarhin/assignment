@@ -42,7 +42,13 @@ const MovieCard: React.FC<Props> = ({ movie }) => {
   };
 
   return (
-    <div className="max-w-md mx-auto overflow-hidden rounded-xl border border-gray-300 dark:bg-bg shadow-md font-medium transition-all duration-300 ease-in-out hover:border-white/60 hover:shadow-lg hover:scale-105">
+    <div
+      draggable
+      onDragStart={(e) => {
+        e.dataTransfer.setData("application/json", JSON.stringify({ type: "movies", item: movie}));
+      }}
+      className="max-w-md mx-auto overflow-hidden rounded-xl border border-gray-300 dark:bg-bg shadow-md font-medium transition-all duration-300 ease-in-out hover:border-white/60 hover:shadow-lg hover:scale-105"
+    >
       {/* Poster */}
       {movie.poster_path ? (
         <img
@@ -73,7 +79,8 @@ const MovieCard: React.FC<Props> = ({ movie }) => {
             {new Date(movie.release_date).toLocaleDateString()}
           </p>
           <p>
-            <strong>Rating:</strong> {movie.vote_average} / 10 ({movie.vote_count} votes)
+            <strong>Rating:</strong> {movie.vote_average} / 10 (
+            {movie.vote_count} votes)
           </p>
           <p>
             <strong>Popularity:</strong> {movie.popularity.toFixed(1)}
@@ -92,7 +99,7 @@ const MovieCard: React.FC<Props> = ({ movie }) => {
               rel="noopener noreferrer"
               className="inline-block hover:px-2 transition-all duration-300 ease-in-out"
             >
-               {t("readMore")}
+              {t("readMore")}
             </Link>
           </Button>
           {isArticleFavourite(movie) ? (

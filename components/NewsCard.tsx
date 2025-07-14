@@ -40,7 +40,13 @@ const NewsCard: React.FC<Props> = ({ article }) => {
   };
 
   return (
-    <div className="dark:bg-bg border border-gray-300 rounded-xl overflow-hidden max-w-md mx-auto font-medium transition-all duration-300 ease-in-out hover:border-white/60 hover:shadow-lg hover:scale-105">
+    <div
+      draggable
+      onDragStart={(e) => {
+        e.dataTransfer.setData("application/json", JSON.stringify({ type: "news", item: article }));
+      }}
+      className="dark:bg-bg border border-gray-300 rounded-xl overflow-hidden max-w-md mx-auto font-medium transition-all duration-300 ease-in-out hover:border-white/60 hover:shadow-lg hover:scale-105"
+    >
       {/* Image */}
       {article.urlToImage && (
         <SmartImage
