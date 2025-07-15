@@ -115,7 +115,7 @@ const Footer = () => {
           </span>
         </div>
       </div>
-      <div className="text-9xl font-bold mt-10">{t("logo").toUpperCase()}</div>
+      <div className="text-9xl font-bold mt-10">{t("Trendify").toUpperCase()}</div>
     </footer>
   );
 };

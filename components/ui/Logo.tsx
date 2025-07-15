@@ -9,7 +9,7 @@ const Logo = () => {
 
   return (
     <div className="text-2xl font-bold px-2 py-1 rounded-md bg-surface text-text hover:bg-hover transition-colors duration-300 cursor-pointer">
-      <Link href="/">{t("logo")}</Link>
+      <Link href="/">{t("Trendify")}</Link>
     </div>
   );
 };

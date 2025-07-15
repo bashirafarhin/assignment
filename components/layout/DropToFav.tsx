@@ -29,7 +29,7 @@ const DropToFavIcon = () => {
       onDragOver={(e) => e.preventDefault()}
       onDrop={handleDrop}
       className="p-2 border border-yellow-400 rounded-full cursor-pointer"
-      // title="Drop news card here to favourite"
+      title="Drop to favourite"
     >
       <Sparkle className="text-yellow-500" />
     </div>
