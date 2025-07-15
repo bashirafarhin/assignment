@@ -7,18 +7,3 @@ export interface NewsArticle {
   author: string;
   source: { name: string };
 }
-
-export interface NewsState {
-  data: NewsArticle[];
-  loading: boolean;
-  error: string | null;
-  category: string;
-  page: number;
-  keyword: string;
-}
-
-export interface TrendingState {
-  data: NewsArticle[];
-  loading: boolean;
-  error: string | null;
-}

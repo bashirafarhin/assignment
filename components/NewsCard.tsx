@@ -2,16 +2,16 @@
 
 import React from "react";
 import { NewsArticle } from "@/types/news";
-import SmartImage from "./SmartImage";
 import Button from "./ui/Button";
 import Link from "next/link";
 import { Sparkles, Sparkle } from "lucide-react";
 import { RootState, AppDispatch } from "@/Redux/store";
-import { insertFavourite } from "@/Redux/slices/favourites";
-import { deleteFavourite } from "@/Redux/slices/favourites";
+import { insertFavourite } from "@/Redux/slices/favouritesReducer";
+import { deleteFavourite } from "@/Redux/slices/favouritesReducer";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import Image from "next/image";
 
 interface Props {
   article: NewsArticle;
@@ -43,20 +43,24 @@ const NewsCard: React.FC<Props> = ({ article }) => {
     <div
       draggable
       onDragStart={(e) => {
-        e.dataTransfer.setData("application/json", JSON.stringify({ type: "news", item: article }));
+        e.dataTransfer.setData(
+          "application/json",
+          JSON.stringify({ type: "news", item: article })
+        );
       }}
       className="dark:bg-bg border border-gray-300 rounded-xl overflow-hidden max-w-md mx-auto font-medium transition-all duration-300 ease-in-out hover:border-white/60 hover:shadow-lg hover:scale-105"
     >
       {/* Image */}
-      {article.urlToImage && (
-        <SmartImage
-          src={article.urlToImage}
+      {/* <div className="relative"> */}
+        <Image
+          src={article.urlToImage || "/fallback.jpeg"}
           alt={article.title}
           width={500}
           height={300}
-          className="rounded-md"
+          className="object-cover rounded-md"
+          unoptimized
         />
-      )}
+      {/* </div> */}
 
       {/* Content */}
       <div className="p-4 space-y-2">

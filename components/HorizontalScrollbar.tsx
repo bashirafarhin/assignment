@@ -26,9 +26,6 @@ const HorizontalScroller: React.FC<HorizontalScrollerProps> = ({
   }, [children]);
 
   return (
-    // <div className="relative">
-    //   <div className="absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-[rgba(255,255,255,0.9)] dark:from-[rgba(0,0,0,0.9)] z-10 pointer-events-none" />
-    //   <div className="absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-[rgba(255,255,255,0.9)] dark:from-[rgba(0,0,0,0.9)] z-10 pointer-events-none" />
     <motion.div
       className="overflow-x-auto overflow-y-hidden hide-scrollbar cursor-grab active:cursor-grabbing px-2"
       whileTap={{ cursor: "grabbing" }}

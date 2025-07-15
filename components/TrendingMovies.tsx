@@ -1,14 +1,15 @@
 "use client";
 
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/Redux/store";
-import MovieCard from "@/components/MovieCard";
+import { movieActions } from "@/Redux/slices/movieSlice";
+import { RootState, AppDispatch } from "@/Redux/store";
+import MovieCard from "./MovieCard";
 import Loader from "@/components/ui/Loader";
 import HorizontalScroller from "./HorizontalScrollbar";
-import toast from "react-hot-toast";
-import { fetchMovies } from "@/Redux/reducers/movies";
 import { useTranslation } from "react-i18next";
+import RetryState from "./ui/RetryState";
+import { fetchMovies } from "@/Redux/reducers/movieReducer";
 
 const TrendingMovies = () => {
   const { t } = useTranslation();
@@ -17,28 +18,36 @@ const TrendingMovies = () => {
     (state: RootState) => state.movies
   );
 
+  // Ensure trending mode: clear keyword and category
   useEffect(() => {
-    dispatch(fetchMovies({ endpoint: "popular", page: 1 }));
+    dispatch(movieActions.resetMovies());
+    dispatch(fetchMovies());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (error) toast.error(error);
-  }, [error]);
+  const handleRetry = () => {
+    dispatch(fetchMovies());
+  };
 
   return (
-    <>
-      <h1 className="font-bold text-6xl text-center my-2">
+    <div className="text-center">
+      <h1 className="font-semibold text-6xl text-center my-4">
         {t("trendingMovies")}
       </h1>
-      { loading && <Loader />}
-      {data && <div className="w-[80vw] mt-6">
-        <HorizontalScroller itemWidth={320} gap={20}>
-          {data.map((movie, index) => (
-            <MovieCard key={index} movie={movie} />
-          ))}
-        </HorizontalScroller>
-      </div>}
-    </>
+
+      {loading && <Loader />}
+
+      {error && !loading && <RetryState onRetry={handleRetry} />}
+
+      {!loading && data.length > 0 && (
+        <div className="w-[80vw] mt-6 mx-auto">
+          <HorizontalScroller itemWidth={320} gap={20}>
+            {data.map((movie, index) => (
+              <MovieCard key={index} movie={movie} />
+            ))}
+          </HorizontalScroller>
+        </div>
+      )}
+    </div>
   );
 };
 

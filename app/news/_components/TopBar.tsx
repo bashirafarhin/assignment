@@ -1,44 +1,70 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import CategoriesDropdown from "./CategoriesDropdown";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/Redux/store";
-import { setKeyword } from "@/Redux/slices/news";
-import { fetchNews } from "@/Redux/reducers/news";
-import { useDebounce } from "@/hooks/useDebounce";
+import { useState, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/Redux/store";
+import Button from "@/components/ui/Button";
+import { useTranslation } from "react-i18next";
+import { fetchNews } from "@/Redux/reducers/newsReducer";
+import { newsActions } from "@/Redux/slices/newsSlice";
+import debounce from "@/utils/debounce";
 
 const TopBar = () => {
-  const [search, setSearch] = useState("");
+  const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
-  const debouncedQuery = useDebounce(search, 500);
+  const [localKeyword, setLocalKeyword] = useState("");
+  const { category } = useSelector((state: RootState) => state.news);
 
-  // useEffect(() => {
-  //   const delayDebounce = setTimeout(() => {
-  //     dispatch(setKeyword(search));
-  //     dispatch(fetchNews());
-  //   }, 500);
+  const CATEGORIES = [
+    t("General"),
+    t("Business"),
+    t("Entertainment"),
+    t("Health"),
+    t("Science"),
+    t("Technology"),
+  ];
 
-  //   return () => clearTimeout(delayDebounce); // Cleanup on re-typing
-  // }, [search, dispatch]);
+  // Debounced query handler (runs only after user stops typing)
+  const debouncedKeyword = useMemo(
+    () =>
+      debounce((keyword: string) => {
+        dispatch(newsActions.resetNews());
+        dispatch(newsActions.setKeyword(keyword));
+        dispatch(fetchNews());
+      }, 500),
+    [dispatch]
+  );
 
-  useEffect(() => {
-    if (debouncedQuery.trim()) {
-      dispatch(setKeyword(search));
-      dispatch(fetchNews());
-    }
-  }, [debouncedQuery, dispatch, search]);
+  const handleKeyword = (query: string) => {
+    setLocalKeyword(query);
+    debouncedKeyword(query.trim());
+  };
+
+  const handleCategory = (category: string) => {
+    dispatch(newsActions.resetNews());
+    dispatch(newsActions.setCategory(category.toLowerCase()));
+    dispatch(fetchNews());
+  };
 
   return (
-    <div className="p-1 flex flex-wrap justify-center items-center gap-5 w-fit mx-auto">
+    <div className="p-2 flex flex-wrap items-center justify-center w-fit gap-2">
       <input
         type="text"
-        placeholder="Search by Keyword"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className="w-fit p-2 border-b border-gray-600 border-black"
+        placeholder="Search by keyword..."
+        value={localKeyword}
+        onChange={(e) => handleKeyword(e.target.value)}
+        className="p-2 border-b border-gray-600 border-black"
       />
-      <CategoriesDropdown />
+
+      {CATEGORIES.map((cat, index) => (
+        <Button
+          key={index}
+          onClick={() => handleCategory(cat)}
+          className={`${category === cat.toLowerCase()? "bg-blue-500" : ""}`}
+        >
+          {cat}
+        </Button>
+      ))}
     </div>
   );
 };

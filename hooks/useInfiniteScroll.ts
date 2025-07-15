@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import debounce from "@/utils/debounce";
 
 interface UseInfiniteScrollProps {
   onLoadMore: () => void;
@@ -11,10 +12,12 @@ const useInfiniteScroll = ({ onLoadMore, loading }: UseInfiniteScrollProps) => {
   useEffect(() => {
     if (loading) return;
 
+    const debouncedLoadMore = debounce(onLoadMore, 300);
+
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          onLoadMore();
+          debouncedLoadMore();
         }
       },
       {

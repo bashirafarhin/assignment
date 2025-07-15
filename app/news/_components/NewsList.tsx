@@ -2,46 +2,88 @@
 
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { incrementPage } from "@/Redux/slices/news";
-import { fetchNews } from "@/Redux/reducers/news";
+import { fetchNews } from "@/Redux/reducers/newsReducer";
 import { RootState, AppDispatch } from "@/Redux/store";
-import NewsCard from "@/components/NewsCard";
 import Loader from "@/components/ui/Loader";
-import toast from "react-hot-toast";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import NewsGrid from "./NewsGrid";
+import { newsActions } from "@/Redux/slices/newsSlice";
+import RetryState from "@/components/ui/RetryState";
 
 const NewsList: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { data, loading, error, page } = useSelector(
-    (state: RootState) => state.news
+  const { data, loading, error, category, page, keyword, totalResults } =
+    useSelector((state: RootState) => state.news);
+  console.log(
+    "data",
+    data,
+    "loading",
+    loading,
+    "error",
+    error,
+    "category",
+    category,
+    "page",
+    page,
+    "keyword",
+    keyword,
+    "total result",
+    totalResults
   );
 
-  useEffect(() => {
-    dispatch(fetchNews());
-  }, [dispatch, page]);
+  const hasMore = data.length < totalResults;
 
   useEffect(() => {
-    if (error) toast.error(error);
-  }, [error]);
+    dispatch(newsActions.resetNews());
+    dispatch(fetchNews());
+  }, [dispatch, category, keyword]);
 
   const observerRef = useInfiniteScroll({
     loading,
-    onLoadMore: () => dispatch(incrementPage()),
+    onLoadMore: () => {
+      if (!loading && hasMore) {
+        dispatch(newsActions.incrementPage());
+        dispatch(fetchNews());
+      }
+    },
   });
 
   if (loading && page === 1) return <Loader />;
 
+  if (keyword && data.length === 0) {
+    return (
+      <div className="text-center my-4">
+        <h1>No results for this keyword.</h1>
+      </div>
+    );
+  }
+
   return (
     <>
-      <div className="w-full grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-6 my-[5rem]">
-        {data.map((article, index) => (
-          <NewsCard key={index} article={article} />
-        ))}
-      </div>
+      <NewsGrid articles={data} />
 
-      <div ref={observerRef} className="h-12 flex justify-center items-center">
-        {loading && <Loader />}
-      </div>
+      {loading && <Loader />}
+
+      {!loading && !hasMore && data.length > 0 && (
+        <p className="text-center my-4 text-gray-500">
+          No more results. Explore different categories or queries
+        </p>
+      )}
+
+      <div
+        ref={observerRef}
+        className="h-12 flex justify-center items-center"
+      />
+
+      {error && (
+        <RetryState
+          onRetry={() => {
+            dispatch(newsActions.resetNews());
+            dispatch(fetchNews());
+          }}
+          errorMessage={error}
+        />
+      )}
     </>
   );
 };

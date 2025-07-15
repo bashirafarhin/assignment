@@ -1,4 +1,3 @@
-// app/api/movies/route.ts
 import { NextRequest, NextResponse } from "next/server";
 
 const TMDB_API = "https://api.themoviedb.org/3";
@@ -6,8 +5,8 @@ const API_KEY = process.env.TMDB_API_KEY!;
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const endpoint = searchParams.get("endpoint");
-  const id = searchParams.get("id"); // for dynamic routes like /movie/123/recommendations
+  const endpoint = searchParams.get("category");
+  const id = searchParams.get("id");
   const query = searchParams.get("query");
   const page = searchParams.get("page") || "1";
 

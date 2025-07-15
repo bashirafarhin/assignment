@@ -1,17 +1,16 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { newsReducer } from './slices/news';
-import { favouritesReducer } from './slices/favourites';
-import { trendingNewsReducer } from './slices/trendingNews';
-import { moviesReducer } from './slices/movies';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { moviesReducer } from './slices/movieSlice';
+import { newsReducer } from './slices/newsSlice';
+import { favouritesReducer } from './slices/favouritesReducer';
+
+const rootReducer = combineReducers({
+  movies: moviesReducer,
+  news: newsReducer,
+  favourites : favouritesReducer
+});
 
 export const store = configureStore({
-  reducer: {
-    news: newsReducer,
-    favourites: favouritesReducer,
-    trending: trendingNewsReducer,
-    movies: moviesReducer
-  },
-  // Thunk is included by default, no need to add manually
+  reducer: rootReducer,
 });
 
 export type RootState = ReturnType<typeof store.getState>;

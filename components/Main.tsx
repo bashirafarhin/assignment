@@ -9,8 +9,7 @@ import { useTranslation } from "react-i18next";
 const Main = () => {
   const { t } = useTranslation();
   return (
-    <div className="my-[5rem] w-[80vw] flex flex-col justify-center items-center space-y-30">
-      <h1 className="font-bold text-7xl">{t("main.welcome")}</h1>
+    <div className="my-[5rem] w-[80vw] flex flex-col justify-center items-center space-y-35">
       <div className="text-7xl text-center">
         <h1>{t("main.line1")}</h1>
         <h1>{t("main.line2")}</h1>

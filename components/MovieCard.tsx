@@ -9,19 +9,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/Redux/store";
 import { RootState } from "@/Redux/store";
 import toast from "react-hot-toast";
-import { deleteFavourite } from "@/Redux/slices/favourites";
-import { insertFavourite } from "@/Redux/slices/favourites";
+import { deleteFavourite } from "@/Redux/slices/favouritesReducer";
+import { insertFavourite } from "@/Redux/slices/favouritesReducer";
 import { useTranslation } from "react-i18next";
+import Image from "next/image";
+
+const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 interface Props {
   movie: Movie;
 }
 
-const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
-
 const MovieCard: React.FC<Props> = ({ movie }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
+  const imgPath = `${IMAGE_BASE_URL}${movie.poster_path}`;
 
   const favouriteMovies = useSelector(
     (state: RootState) => state.favourites.movies
@@ -45,22 +47,34 @@ const MovieCard: React.FC<Props> = ({ movie }) => {
     <div
       draggable
       onDragStart={(e) => {
-        e.dataTransfer.setData("application/json", JSON.stringify({ type: "movies", item: movie}));
+        e.dataTransfer.setData(
+          "application/json",
+          JSON.stringify({ type: "movies", item: movie })
+        );
       }}
       className="max-w-md mx-auto overflow-hidden rounded-xl border border-gray-300 dark:bg-bg shadow-md font-medium transition-all duration-300 ease-in-out hover:border-white/60 hover:shadow-lg hover:scale-105"
     >
       {/* Poster */}
-      {movie.poster_path ? (
-        <img
-          src={`${IMAGE_BASE_URL}${movie.poster_path}`}
+      {/* <div className="aspect-[16/9] w-full relative">
+        <Image
+          src={imgPath || "/fallback.jpeg"}
           alt={movie.title}
-          className="w-full h-72 object-cover"
+          width={500}
+          height={300}
+          className="rounded-md"
+          unoptimized
         />
-      ) : (
-        <div className="h-72 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-          <span className="text-gray-500">No Image</span>
-        </div>
-      )}
+      </div> */}
+      <div className="w-full h-[300px] relative mx-auto">
+        <Image
+          src={imgPath || "/fallback.jpeg"}
+          alt={movie.title}
+          fill
+          className="object-cover rounded-md"
+          priority
+          unoptimized
+        />
+      </div>
 
       {/* Content */}
       <div className="p-4 space-y-2">

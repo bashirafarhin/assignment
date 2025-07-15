@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { FavouritesState } from "@/types/favourites";
 import type { NewsArticle } from "@/types/news";
 import { Movie } from "@/types/movie";
-import { getFavouritesFromLocalStorage, updateLocalStorage } from "../reducers/favourites";
+import { getFavouritesFromLocalStorage, updateLocalStorage } from "../reducers/favouritesReducer";
 
 const initialState: FavouritesState = {
   news: [],

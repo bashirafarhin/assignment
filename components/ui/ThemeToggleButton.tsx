@@ -9,7 +9,6 @@ const ThemeToggleButton = () => {
   const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  // Step 1: On mount, read from localStorage and set theme
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
     if (storedTheme === "dark" || storedTheme === "light") {

@@ -1,24 +1,14 @@
-"use client"
 import React from "react";
 import TopBar from "./_components/TopBar";
 import NewsList from "./_components/NewsList";
-import { useTranslation } from "react-i18next";
+import NewsTopSection from "./_components/NewsTopSection";
 
-const Page = () => {
-  const { t } = useTranslation();
-
+export default function Page ()  {
   return (
     <div className="my-[5rem] w-[80vw] flex flex-col justify-center items-center space-y-8">
-      <div className="mx-auto px-4 font-bold text-6xl text-center">
-        <h1>{t("news")}</h1>
-        <p className="text-base sm:text-lg font-normal mt-4">
-          {t("newsTagLine")}
-        </p>
-      </div>
+      <NewsTopSection />
       <TopBar />
       <NewsList />
     </div>
   );
 };
-
-export default Page;
